@@ -1,0 +1,42 @@
+* {
+  font-family: Arial;
+}
+body {
+  margin: 0;
+}
+div.options {
+  padding: 10px;
+  background: #fafafa;
+  box-shadow: 0 0 5px #aaa;
+  input[type=checkbox].filterCheckbox {
+    display: none;
+    & + label {
+      transition: all 0.2s;
+      border: 1px solid #ddd;
+      padding: 5px;
+      margin: 0 10px 10px 0;
+      display: inline-block;
+      &:hover {
+        cursor: pointer;
+        background: #eee;
+      }
+    }
+    &:checked + label {
+      background: #dfd;
+      &:hover {
+        background: #cfc;
+      }
+    }
+  }
+}
+
+img.card {
+  width: 100px;
+  height: 151px;
+  transition: all 0.5s;
+  &:hover {
+    position: absolute;
+    width: 307px;
+    height: 465px;
+  }
+}

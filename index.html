@@ -1,0 +1,28 @@
+<html ng-app="hearthstoneApp" ng-controller="classController">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.min.css">
+  </head>
+  <body>
+    <div class="options">
+      <h3>Class</h3>
+      <input ng-repeat-start="class in info.classes" id="{{class}}" class="filterCheckbox" type="checkbox" name="class" value="{{class}}" ng-click="updateClass(class)"><label ng-repeat-end for="{{class}}">{{class}}</label>
+      <h3>Set</h3>
+      <input ng-repeat-start="set in info.sets" id="{{set}}" class="filterCheckbox" type="checkbox" name="set" ng-click="updateSet(set)" value="{{set}}" ng-click="updateSet(set)"><label ng-repeat-end for="{{set}}">{{set}}</label>
+      <h3>Type</h3>
+      <input ng-repeat-start="type in info.types" id="{{type}}" class="filterCheckbox" type="checkbox" name="type" ng-click="updateType(type)" value="type"><label ng-repeat-end for="{{type}}">{{type}}</label>
+      <h3>Quality</h3>
+      <input ng-repeat-start="quality in info.qualities" id="{{quality}}" class="filterCheckbox" type="checkbox" name="quality" ng-click="updateQuality(quality)" value="quality"><label ng-repeat-end for="{{quality}}">{{quality}}</label>
+      <h3>Race</h3>
+      <input ng-repeat-start="race in info.races" id="{{race}}" class="filterCheckbox" type="checkbox" name="race" ng-click="updateRace(race)" value="race"><label ng-repeat-end for="{{race}}">{{race}}</label>
+      <h3>Search</h3>
+      <input id="search" class="search" name="search" type="search" ng-model="search"/>
+    </div>
+    <section>
+      <img ng-repeat="card in cards | byClass: this | bySet: this | filter: search | orderBy: 'cost' | limitTo: 20" class="card" src="{{card.img}}" width="100" height="151" alt="{{card.name}}"/>
+    </section>
+  </body>
+</html>
