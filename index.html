@@ -2,6 +2,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="node_modules\checklist-model\checklist-model.js"></script>
     <script src="app.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="style.min.css">
@@ -9,20 +10,39 @@
   <body>
     <div class="options">
       <h3>Class</h3>
-      <input ng-repeat-start="class in info.classes" id="{{class}}" class="filterCheckbox" type="checkbox" name="class" value="{{class}}" ng-click="updateClass(class)"><label ng-repeat-end for="{{class}}">{{class}}</label>
+      <div ng-repeat="class in info.classes">
+        <input id="{{class}}" class="filterSelector" type="checkbox" checklist-model="classSelections" checklist-value="class"><label for="{{class}}">{{class}}</label>
+      </div>
       <h3>Set</h3>
-      <input ng-repeat-start="set in info.sets" id="{{set}}" class="filterCheckbox" type="checkbox" name="set" ng-click="updateSet(set)" value="{{set}}" ng-click="updateSet(set)"><label ng-repeat-end for="{{set}}">{{set}}</label>
+      <input id="standard" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.standard)"/><label for="standard">Standard</label>
+      <input id="wild" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.wild)"/><label for="wild">Wild</label>
+      <br />
+      <div ng-repeat="set in info.sets">
+        <input id="{{set}}" class="filterSelector" type="checkbox" checklist-model="$parent.setSelections" checklist-value="set"><label for="{{set}}">{{set}}</label>
+      </div>
       <h3>Type</h3>
-      <input ng-repeat-start="type in info.types" id="{{type}}" class="filterCheckbox" type="checkbox" name="type" ng-click="updateType(type)" value="type"><label ng-repeat-end for="{{type}}">{{type}}</label>
+      <div ng-repeat="type in info.types">
+        <input id="{{type}}" class="filterSelector" type="checkbox" checklist-model="typeSelections" checklist-value="type"><label for="{{type}}">{{type}}</label>
+      </div>
       <h3>Quality</h3>
-      <input ng-repeat-start="quality in info.qualities" id="{{quality}}" class="filterCheckbox" type="checkbox" name="quality" ng-click="updateQuality(quality)" value="quality"><label ng-repeat-end for="{{quality}}">{{quality}}</label>
+      <div ng-repeat="quality in info.qualities">
+        <input id="{{quality}}" class="filterSelector" type="checkbox" checklist-model="qualitySelections" checklist-value="quality"><label for="{{quality}}">{{quality}}</label>
+      </div>
       <h3>Race</h3>
-      <input ng-repeat-start="race in info.races" id="{{race}}" class="filterCheckbox" type="checkbox" name="race" ng-click="updateRace(race)" value="race"><label ng-repeat-end for="{{race}}">{{race}}</label>
+      <div ng-repeat="race in info.races">
+        <input id="{{race}}" class="filterSelector" type="checkbox" checklist-model="raceSelections" checklist-value="race"><label for="{{race}}">{{race}}</label>
+      </div>
+      <h3>Faction</h3>
+      <div ng-repeat="faction in info.factions">
+        <input id="{{faction}}" class="filterSelector" type="checkbox" checklist-model="factionSelections" checklist-value="faction"><label for="{{faction}}">{{faction}}</label>
+      </div>
       <h3>Search</h3>
       <input id="search" class="search" name="search" type="search" ng-model="search"/>
     </div>
-    <section>
-      <img ng-repeat="card in cards | byClass: this | bySet: this | filter: search | orderBy: 'cost' | limitTo: 20" class="card" src="{{card.img}}" width="100" height="151" alt="{{card.name}}"/>
+    <section class="results">
+      <div ng-repeat="card in cards | byClass: this | bySet: this | byType: this | byQuality: this | byRace: this | byFaction: this | filter: search | orderBy: 'cost' | limitTo: 20 track by $index" class="image-holder">
+        <img class="card" src="{{card.img}}" alt="{{card.name}}"/>
+      </div>
     </section>
   </body>
 </html>

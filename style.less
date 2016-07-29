@@ -1,3 +1,8 @@
+@cardHeight: 450px;
+@cardWidth: 300px;
+@smalldardHeight: 450px/3;
+@smalldardWidth: 300px/3;
+
 * {
   font-family: Arial;
 }
@@ -8,35 +13,62 @@ div.options {
   padding: 10px;
   background: #fafafa;
   box-shadow: 0 0 5px #aaa;
-  input[type=checkbox].filterCheckbox {
-    display: none;
-    & + label {
-      transition: all 0.2s;
-      border: 1px solid #ddd;
-      padding: 5px;
-      margin: 0 10px 10px 0;
-      display: inline-block;
-      &:hover {
-        cursor: pointer;
-        background: #eee;
-      }
+  div {
+    display: inline-block;
+  }
+}
+
+input[type=checkbox].filterSelector, input[type=button].filterSelector {
+  display: none;
+  & + label {
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: 0 10px 10px 0;
+    display: inline-block;
+    &:hover {
+      cursor: pointer;
+      background: #eee;
     }
-    &:checked + label {
-      background: #dfd;
-      &:hover {
-        background: #cfc;
-      }
+  }
+  &:checked + label {
+    background: #dfd;
+    &:hover {
+      background: #cfc;
     }
   }
 }
 
-img.card {
-  width: 100px;
-  height: 151px;
-  transition: all 0.5s;
-  &:hover {
-    position: absolute;
-    width: 307px;
-    height: 465px;
+section.results {
+  padding: 70px 70px 100px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  div.image-Holder {
+    height: @cardHeight / 2;
+    width: @cardWidth / 2;
+    position: relative;
+    display: inline-block;
+    img.card {
+      position: absolute;
+      height: @cardHeight / 2;
+      width: @cardWidth / 2;
+      z-index: 1;
+      margin: 0 0;
+      pointer-events: none;
+      transition: height 0.3s, width 0.3s, margin 0.3s;
+    }
+    &:hover img.card {
+      height: @cardHeight;
+      width: @cardWidth;
+      margin: -(@cardHeight - (@cardHeight / 2)) / 2 -(@cardWidth - (@cardWidth / 2)) / 2;
+      z-index: 2;
+      transition: height 0.3s, width 0.3s, margin 0.3s;
+    }
   }
+}
+section:after {
+  content: "";
+  flex: auto;
 }

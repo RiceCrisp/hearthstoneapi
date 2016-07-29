@@ -1,8 +1,12 @@
-var app = angular.module('hearthstoneApp', []);
+var app = angular.module('hearthstoneApp', ['checklist-model']);
 
 app.controller('classController', ['$scope', '$http', 'apiService', function classController($scope, $http, apiService) {
   $scope.classSelections = [];
   $scope.setSelections = [];
+  $scope.typeSelections = [];
+  $scope.qualitySelections = [];
+  $scope.raceSelections = [];
+  $scope.factionSelections = [];
   $scope.cards = [];
   $http.get('https://omgvamp-hearthstone-v1.p.mashape.com/info?mashape-key=9pTa6oeWRPmshmneQgsJFe8DiNTmp1hhHNljsnhHFvYUd0RklN')
   .then(function(res) {
@@ -14,23 +18,13 @@ app.controller('classController', ['$scope', '$http', 'apiService', function cla
       $scope.cards = $scope.cards.concat(value);
     });
   });
+  $scope.switchSets = function(sets) {
+    $scope.setSelections = [];
+    angular.forEach(sets, function(value, key) {
+      $scope.setSelections = $scope.setSelections.concat(value);
+    });
+  };
   //apiService.getCards('Mage').then(function(res) {
-  $scope.updateClass = function(newClass) {
-    var index = $scope.classSelections.indexOf(newClass);
-    if (index>=0) {
-      $scope.classSelections.splice(index, 1);
-    } else {
-      $scope.classSelections.push(newClass);
-    }
-  };
-  $scope.updateSet = function(newSet) {
-    var index = $scope.setSelections.indexOf(newSet);
-    if (index>=0) {
-      $scope.setSelections.splice(index, 1);
-    } else {
-      $scope.setSelections.push(newSet);
-    }
-  };
 }]);
 
 app.filter('byClass', function() {
@@ -60,6 +54,78 @@ app.filter('bySet', function() {
     for(var i = 0; i < input.length; i++) {
       for (var ii = 0; ii < scope.setSelections.length; ii++) {
         if (input[i].cardSet == scope.setSelections[ii]) {
+          output = output.concat(input[i]);
+          break;
+        }
+      }
+    }
+    return output;
+  };
+});
+
+app.filter('byType', function() {
+  return function(input, scope) {
+    if (scope.typeSelections.length==0) {
+      return input;
+    }
+    var output = [];
+    for(var i = 0; i < input.length; i++) {
+      for (var ii = 0; ii < scope.typeSelections.length; ii++) {
+        if (input[i].type == scope.typeSelections[ii]) {
+          output = output.concat(input[i]);
+          break;
+        }
+      }
+    }
+    return output;
+  };
+});
+
+app.filter('byQuality', function() {
+  return function(input, scope) {
+    if (scope.qualitySelections.length==0) {
+      return input;
+    }
+    var output = [];
+    for(var i = 0; i < input.length; i++) {
+      for (var ii = 0; ii < scope.qualitySelections.length; ii++) {
+        if (input[i].rarity == scope.qualitySelections[ii]) {
+          output = output.concat(input[i]);
+          break;
+        }
+      }
+    }
+    return output;
+  };
+});
+
+app.filter('byRace', function() {
+  return function(input, scope) {
+    if (scope.raceSelections.length==0) {
+      return input;
+    }
+    var output = [];
+    for(var i = 0; i < input.length; i++) {
+      for (var ii = 0; ii < scope.raceSelections.length; ii++) {
+        if (input[i].race == scope.raceSelections[ii]) {
+          output = output.concat(input[i]);
+          break;
+        }
+      }
+    }
+    return output;
+  };
+});
+
+app.filter('byFaction', function() {
+  return function(input, scope) {
+    if (scope.factionSelections.length==0) {
+      return input;
+    }
+    var output = [];
+    for(var i = 0; i < input.length; i++) {
+      for (var ii = 0; ii < scope.factionSelections.length; ii++) {
+        if (input[i].faction == scope.factionSelections[ii]) {
           output = output.concat(input[i]);
           break;
         }
