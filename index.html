@@ -1,51 +1,93 @@
 <html ng-app="hearthstoneApp" ng-controller="classController">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="node_modules\checklist-model\checklist-model.js"></script>
-    <script src="app.js"></script>
-    <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="style.min.css">
   </head>
   <body>
     <div class="options">
-      <h3>Class</h3>
-      <div ng-repeat="class in info.classes">
-        <input id="{{class}}" class="filterSelector" type="checkbox" checklist-model="classSelections" checklist-value="class"><label for="{{class}}">{{class}}</label>
-      </div>
-      <h3>Set</h3>
-      <input id="standard" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.standard)"/><label for="standard">Standard</label>
-      <input id="wild" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.wild)"/><label for="wild">Wild</label>
-      <br />
-      <div ng-repeat="set in info.sets">
-        <input id="{{set}}" class="filterSelector" type="checkbox" checklist-model="$parent.setSelections" checklist-value="set"><label for="{{set}}">{{set}}</label>
-      </div>
-      <h3>Type</h3>
-      <div ng-repeat="type in info.types">
-        <input id="{{type}}" class="filterSelector" type="checkbox" checklist-model="typeSelections" checklist-value="type"><label for="{{type}}">{{type}}</label>
-      </div>
-      <h3>Quality</h3>
-      <div ng-repeat="quality in info.qualities">
-        <input id="{{quality}}" class="filterSelector" type="checkbox" checklist-model="qualitySelections" checklist-value="quality"><label for="{{quality}}">{{quality}}</label>
-      </div>
-      <h3>Race</h3>
-      <div ng-repeat="race in info.races">
-        <input id="{{race}}" class="filterSelector" type="checkbox" checklist-model="raceSelections" checklist-value="race"><label for="{{race}}">{{race}}</label>
-      </div>
-      <h3>Faction</h3>
-      <div ng-repeat="faction in info.factions">
-        <input id="{{faction}}" class="filterSelector" type="checkbox" checklist-model="factionSelections" checklist-value="faction"><label for="{{faction}}">{{faction}}</label>
-      </div>
-      <h3>Cost</h3>
-      <h3>Attack</h3>
-      <h3>Health/Durability</h3>
-      <h3>Search</h3>
-      <input id="search" class="search" name="search" type="search" ng-model="search"/>
+      <section>
+        <h3 class="minus" style="margin-top: 0" data-target="#set-toggle">Set</h3>
+        <div id="set-toggle" class="toggle">
+          <input id="standard" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.standard)"/><label for="standard">Standard</label>
+          <input id="wild" class="filterSelector" type="button" name="svsw" ng-click="switchSets(info.wild)"/><label for="wild">Wild</label>
+          <br />
+          <div ng-repeat="set in info.sets">
+            <input id="{{set}}" class="filterSelector" type="checkbox" checklist-model="$parent.setSelections" checklist-value="set"><label for="{{set}}">{{set}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#class-toggle">Class</h3>
+        <div id="class-toggle" class="toggle">
+          <div ng-repeat="class in info.classes">
+            <input id="{{class}}" class="filterSelector" type="checkbox" checklist-model="classSelections" checklist-value="class"><label for="{{class}}">{{class}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#type-toggle">Type</h3>
+        <div id="type-toggle" class="toggle">
+          <div ng-repeat="type in info.types">
+            <input id="{{type}}" class="filterSelector" type="checkbox" checklist-model="typeSelections" checklist-value="type"><label for="{{type}}">{{type}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#rarity-toggle">Rarity</h3>
+        <div id="rarity-toggle" class="toggle">
+          <div ng-repeat="quality in info.qualities">
+            <input id="{{quality}}" class="filterSelector" type="checkbox" checklist-model="qualitySelections" checklist-value="quality"><label for="{{quality}}">{{quality}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#race-toggle">Race</h3>
+        <div id="race-toggle" class="toggle">
+          <div ng-repeat="race in info.races">
+            <input id="{{race}}" class="filterSelector" type="checkbox" checklist-model="raceSelections" checklist-value="race"><label for="{{race}}">{{race}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#cost-toggle">Cost</h3>
+        <div id="cost-toggle" class="toggle">
+          <div ng-repeat="cost in [0,1,2,3,4,5,6,7]">
+            <input id="cost{{cost}}" class="filterSelector" type="checkbox" checklist-model="costSelections" checklist-value="cost"><label for="cost{{cost}}">{{cost}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#attack-toggle">Attack</h3>
+        <div id="attack-toggle" class="toggle">
+          <div ng-repeat="attack in ['0','1','2','3','4','5','6','7','8','9','10+']">
+            <input id="attack{{attack}}" class="filterSelector" type="checkbox" checklist-model="attackSelections" checklist-value="attack"><label for="attack{{attack}}">{{attack}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#health-toggle">Health/Durability</h3>
+        <div id="health-toggle" class="toggle">
+          <div ng-repeat="health in ['0','1','2','3','4','5','6','7','8','9','10+']">
+            <input id="health{{health}}" class="filterSelector" type="checkbox" checklist-model="healthSelections" checklist-value="health"><label for="health{{health}}">{{health}}</label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3 class="minus" data-target="#search-toggle">Search</h3>
+        <div id="search-toggle" class="toggle">
+          <input id="search" class="search" name="search" type="search" ng-model="search"/>
+        </div>
+      </section>
     </div>
-    <section class="results">
-      <div ng-repeat="card in cards | byClass: this | bySet: this | byType: this | byQuality: this | byRace: this | byFaction: this | filter: search | orderBy: 'cost' | limitTo: 20 track by $index" class="image-holder">
+    <div class="results">
+      <div ng-repeat="card in cards | byClass: this | bySet: this | byType: this | byQuality: this | byRace: this | byCost: this | byAttack: this | byHealth: this | filter: search | orderBy: 'cost' | limitTo: 50 track by $index" class="image-holder">
         <img class="card" src="{{card.img}}" alt="{{card.name}}"/>
       </div>
-    </section>
+    </div>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="node_modules\checklist-model\checklist-model.js"></script>
+  <script src="app.js"></script>
+  <script src="script.js"></script>
 </html>

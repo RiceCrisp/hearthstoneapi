@@ -1,21 +1,47 @@
 @cardHeight: 450px;
 @cardWidth: 300px;
-@smalldardHeight: 450px/3;
-@smalldardWidth: 300px/3;
+@myYellow: #F0AD4E;
 
 * {
   font-family: Arial;
 }
 body {
   margin: 0;
+  background: transparent url("https://us.battle.net/hearthstone/static/images/body-content-bg.jpg") 50% 0 repeat-y;
 }
 div.options {
   padding: 10px;
   background: #fafafa;
   box-shadow: 0 0 5px #aaa;
-  div {
-    display: inline-block;
+  section {
+    border: 1px solid @myYellow;
+    margin-bottom: 10px;
+    h3 {
+      background: @myYellow;
+      color: #fff;
+      margin: 0;
+      padding: 5px;
+      &.plus:after {
+        content: " +";
+      }
+      &.minus:after {
+        content: " -";
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    div.toggle {
+      background: #fff;
+      div {
+        display: inline-block;
+      }
+    }
   }
+}
+
+input[type=search] {
+  margin: 5px;
 }
 
 input[type=checkbox].filterSelector, input[type=button].filterSelector {
@@ -24,8 +50,10 @@ input[type=checkbox].filterSelector, input[type=button].filterSelector {
     transition: all 0.2s;
     border: 1px solid #ddd;
     padding: 5px;
-    margin: 0 10px 10px 0;
+    margin: 5px;
     display: inline-block;
+    min-width: 20px;
+    text-align: center;
     &:hover {
       cursor: pointer;
       background: #eee;
@@ -39,7 +67,7 @@ input[type=checkbox].filterSelector, input[type=button].filterSelector {
   }
 }
 
-section.results {
+div.results {
   padding: 70px 70px 100px;
   overflow: hidden;
   display: flex;
@@ -67,8 +95,4 @@ section.results {
       transition: height 0.3s, width 0.3s, margin 0.3s;
     }
   }
-}
-section:after {
-  content: "";
-  flex: auto;
 }
