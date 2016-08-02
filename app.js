@@ -13,15 +13,15 @@ app.controller('classController', ['$scope', '$http', 'apiService', function cla
   $http.get('https://omgvamp-hearthstone-v1.p.mashape.com/info?mashape-key=9pTa6oeWRPmshmneQgsJFe8DiNTmp1hhHNljsnhHFvYUd0RklN')
   .then(function(res) {
     $scope.info = res.data;
+    // Replace data for only collectible
+    $scope.info.sets = ['Basic', 'Classic', 'Naxxramas', 'Goblins vs Gnomes', 'Blackrock Mountain', 'The Grand Tournament', 'The League of Explorers', 'Whispers of the Old Gods', 'Promo', 'Reward'];
+    $scope.info.classes = ['Druid', 'Hunter', 'Mage', 'Paladin', 'Priest', 'Rogue', 'Shaman', 'Warlock', 'Warrior'];
+    $scope.info.types = ['Minion', 'Spell', 'Weapon'];
   });
   $http.get('https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=9pTa6oeWRPmshmneQgsJFe8DiNTmp1hhHNljsnhHFvYUd0RklN')
   .then(function(res) {
     angular.forEach(res.data, function(value, key) {
-      //angular.forEach(value, function(value2, key2) {
-      //  if (value2.collectible) {
-          $scope.cards = $scope.cards.concat(value);
-      //  }
-      //});
+      $scope.cards = $scope.cards.concat(value);
     });
   });
   $scope.switchSets = function(sets) {
@@ -30,8 +30,36 @@ app.controller('classController', ['$scope', '$http', 'apiService', function cla
       $scope.setSelections = $scope.setSelections.concat(value);
     });
   };
-  //apiService.getCards('Mage').then(function(res) {
+  $scope.openCard = function(cardID) {
+    $('.singleCard').css('display', 'block');
+    $('.singleCard').animate({'height': '100%'}, 'slow', function() {
+      $('.close').fadeIn('slow');
+    });
+    $http.get('https://omgvamp-hearthstone-v1.p.mashape.com/cards/' + cardID + '?mashape-key=9pTa6oeWRPmshmneQgsJFe8DiNTmp1hhHNljsnhHFvYUd0RklN')
+    .then(function(res) {
+      $scope.curCard = res.data;
+      $('.cardInfo').fadeIn('slow');
+    });
+  };
+  $scope.closeCard = function() {
+    $('.singleCard, .cardInfo, .close').fadeOut('slow', function() {
+      $('.singleCard').css('height', '0');
+      $scope.curCard = [];
+    });
+  };
 }]);
+
+app.filter('byCollectible', function() {
+  return function(input, scope) {
+    var output = [];
+    for(var i = 0; i < input.length; i++) {
+      if (input[i].collectible == true && input[i].type != 'Hero') {
+        output = output.concat(input[i]);
+      }
+    }
+    return output;
+  };
+});
 
 app.filter('byClass', function() {
   return function(input, scope) {
@@ -126,6 +154,12 @@ app.filter('byCost', function() {
     var output = [];
     for(var i = 0; i < input.length; i++) {
       for (var ii = 0; ii < scope.costSelections.length; ii++) {
+        if (scope.costSelections[ii] == '7+') {
+          if (input[i].cost >= 7) {
+            output = output.concat(input[i]);
+            continue;
+          }
+        }
         if (input[i].cost == scope.costSelections[ii]) {
           output = output.concat(input[i]);
         }

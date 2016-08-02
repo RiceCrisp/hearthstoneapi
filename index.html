@@ -3,6 +3,15 @@
     <link rel="stylesheet" type="text/css" href="style.min.css">
   </head>
   <body>
+    <div class="singleCard">
+      <div class="close" ng-click="closeCard()"></div>
+      <div class="cardInfo">
+        <h2>{{curCard[0].name}}</h2>
+        <p><i>{{curCard[0].flavor}}</i></p>
+        <img src="{{curCard[0].img}}" />
+        <img src="{{curCard[0].imgGold}}" />
+      </div>
+    </div>
     <div class="options">
       <section>
         <h3 class="minus" style="margin-top: 0" data-target="#set-toggle">Set</h3>
@@ -16,26 +25,36 @@
         </div>
       </section>
       <section>
-        <h3 class="minus" data-target="#class-toggle">Class</h3>
-        <div id="class-toggle" class="toggle">
-          <div ng-repeat="class in info.classes">
-            <input id="{{class}}" class="filterSelector" type="checkbox" checklist-model="classSelections" checklist-value="class"><label for="{{class}}">{{class}}</label>
+        <h3 class="minus" data-target="#class-toggle">Class &amp; Type</h3>
+        <div id="class-toggle" class="toggle col-2">
+          <div class="col">
+            <h4>Class</h4>
+            <div ng-repeat="class in info.classes">
+              <input id="{{class}}" class="filterSelector" type="checkbox" checklist-model="classSelections" checklist-value="class"><label for="{{class}}">{{class}}</label>
+            </div>
+          </div>
+          <div class="col">
+            <h4>Type</h4>
+            <div ng-repeat="type in info.types">
+              <input id="{{type}}" class="filterSelector" type="checkbox" checklist-model="typeSelections" checklist-value="type"><label for="{{type}}">{{type}}</label>
+            </div>
           </div>
         </div>
       </section>
       <section>
-        <h3 class="minus" data-target="#type-toggle">Type</h3>
-        <div id="type-toggle" class="toggle">
-          <div ng-repeat="type in info.types">
-            <input id="{{type}}" class="filterSelector" type="checkbox" checklist-model="typeSelections" checklist-value="type"><label for="{{type}}">{{type}}</label>
+        <h3 class="minus" data-target="#cost-rarity-toggle">Cost &amp; Rarity</h3>
+        <div id="cost-rarity-toggle" class="toggle col-2">
+          <div class="col">
+            <h4>Cost</h4>
+            <div ng-repeat="cost in ['0','1','2','3','4','5','6','7+']">
+              <input id="cost{{cost}}" class="filterSelector" type="checkbox" checklist-model="costSelections" checklist-value="cost"><label for="cost{{cost}}">{{cost}}</label>
+            </div>
           </div>
-        </div>
-      </section>
-      <section>
-        <h3 class="minus" data-target="#rarity-toggle">Rarity</h3>
-        <div id="rarity-toggle" class="toggle">
-          <div ng-repeat="quality in info.qualities">
-            <input id="{{quality}}" class="filterSelector" type="checkbox" checklist-model="qualitySelections" checklist-value="quality"><label for="{{quality}}">{{quality}}</label>
+          <div class="col">
+            <h4>Rarity</h4>
+            <div ng-repeat="quality in info.qualities">
+              <input id="{{quality}}" class="filterSelector" type="checkbox" checklist-model="qualitySelections" checklist-value="quality"><label for="{{quality}}">{{quality}}</label>
+            </div>
           </div>
         </div>
       </section>
@@ -48,26 +67,19 @@
         </div>
       </section>
       <section>
-        <h3 class="minus" data-target="#cost-toggle">Cost</h3>
-        <div id="cost-toggle" class="toggle">
-          <div ng-repeat="cost in [0,1,2,3,4,5,6,7]">
-            <input id="cost{{cost}}" class="filterSelector" type="checkbox" checklist-model="costSelections" checklist-value="cost"><label for="cost{{cost}}">{{cost}}</label>
+        <h3 class="minus" data-target="#attack-health-toggle">Attack &amp; Health</h3>
+        <div id="attack-health-toggle" class="toggle col-2">
+          <div class="col">
+            <h4>Attack</h4>
+            <div ng-repeat="attack in ['0','1','2','3','4','5','6','7','8','9','10+']">
+              <input id="attack{{attack}}" class="filterSelector" type="checkbox" checklist-model="attackSelections" checklist-value="attack"><label for="attack{{attack}}">{{attack}}</label>
+            </div>
           </div>
-        </div>
-      </section>
-      <section>
-        <h3 class="minus" data-target="#attack-toggle">Attack</h3>
-        <div id="attack-toggle" class="toggle">
-          <div ng-repeat="attack in ['0','1','2','3','4','5','6','7','8','9','10+']">
-            <input id="attack{{attack}}" class="filterSelector" type="checkbox" checklist-model="attackSelections" checklist-value="attack"><label for="attack{{attack}}">{{attack}}</label>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h3 class="minus" data-target="#health-toggle">Health/Durability</h3>
-        <div id="health-toggle" class="toggle">
-          <div ng-repeat="health in ['0','1','2','3','4','5','6','7','8','9','10+']">
-            <input id="health{{health}}" class="filterSelector" type="checkbox" checklist-model="healthSelections" checklist-value="health"><label for="health{{health}}">{{health}}</label>
+          <div class="col">
+            <h4>Health/Durability</h4>
+            <div ng-repeat="health in ['0','1','2','3','4','5','6','7','8','9','10+']">
+              <input id="health{{health}}" class="filterSelector" type="checkbox" checklist-model="healthSelections" checklist-value="health"><label for="health{{health}}">{{health}}</label>
+            </div>
           </div>
         </div>
       </section>
@@ -79,7 +91,7 @@
       </section>
     </div>
     <div class="results">
-      <div ng-repeat="card in cards | byClass: this | bySet: this | byType: this | byQuality: this | byRace: this | byCost: this | byAttack: this | byHealth: this | filter: search | orderBy: 'cost' | limitTo: 50 track by $index" class="image-holder">
+      <div class="image-holder" ng-click="openCard(card.cardId)" ng-repeat="card in cards | byCollectible: this | byClass: this | bySet: this | byType: this | byQuality: this | byRace: this | byCost: this | byAttack: this | byHealth: this | filter: search | orderBy: 'cost' track by $index">
         <img class="card" src="{{card.img}}" alt="{{card.name}}"/>
       </div>
     </div>

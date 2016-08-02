@@ -5,10 +5,38 @@
 * {
   font-family: Arial;
 }
+
 body {
   margin: 0;
   background: transparent url("https://us.battle.net/hearthstone/static/images/body-content-bg.jpg") 50% 0 repeat-y;
 }
+
+div.singleCard {
+  width: 100%;
+  height: 0;
+  position: fixed;
+  background: #fff;
+  z-index: 5;
+  display: none;
+  div.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: #000;
+    display: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  div.cardInfo {
+    display: none;
+    max-width: 1000px;
+    margin: auto;
+  }
+}
+
 div.options {
   padding: 10px;
   background: #fafafa;
@@ -29,6 +57,17 @@ div.options {
       }
       &:hover {
         cursor: pointer;
+      }
+    }
+    div.col-2 {
+      display: flex;
+      flex-wrap: wrap;
+      div.col {
+        flex: 1 1;
+        min-width: 475px;
+        h4 {
+          margin: 5px 5px 0 5px;
+        }
       }
     }
     div.toggle {
@@ -87,12 +126,15 @@ div.results {
       pointer-events: none;
       transition: height 0.3s, width 0.3s, margin 0.3s;
     }
-    &:hover img.card {
-      height: @cardHeight;
-      width: @cardWidth;
-      margin: -(@cardHeight - (@cardHeight / 2)) / 2 -(@cardWidth - (@cardWidth / 2)) / 2;
-      z-index: 2;
-      transition: height 0.3s, width 0.3s, margin 0.3s;
+    &:hover {
+      cursor: pointer;
+      img.card {
+        height: @cardHeight;
+        width: @cardWidth;
+        margin: -(@cardHeight - (@cardHeight / 2)) / 2 -(@cardWidth - (@cardWidth / 2)) / 2;
+        z-index: 2;
+        transition: height 0.3s, width 0.3s, margin 0.3s;
+      }
     }
   }
 }
