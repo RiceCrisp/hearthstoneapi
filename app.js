@@ -32,7 +32,7 @@ app.controller('classController', ['$scope', '$http', 'apiService', function cla
   };
   $scope.openCard = function(cardID) {
     $('.singleCard').css('display', 'block');
-    $('.singleCard').animate({'height': '100%'}, 'slow', function() {
+    $('.singleCard').animate({'min-height': '100%'}, 'slow', function() {
       $('.close').fadeIn('slow');
     });
     $http.get('https://omgvamp-hearthstone-v1.p.mashape.com/cards/' + cardID + '?mashape-key=9pTa6oeWRPmshmneQgsJFe8DiNTmp1hhHNljsnhHFvYUd0RklN')
@@ -43,7 +43,7 @@ app.controller('classController', ['$scope', '$http', 'apiService', function cla
   };
   $scope.closeCard = function() {
     $('.singleCard, .cardInfo, .close').fadeOut('slow', function() {
-      $('.singleCard').css('height', '0');
+      $('.singleCard').css('min-height', '0');
       $scope.curCard = [];
     });
   };

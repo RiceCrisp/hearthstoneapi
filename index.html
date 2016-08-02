@@ -4,12 +4,17 @@
   </head>
   <body>
     <div class="singleCard">
-      <div class="close" ng-click="closeCard()"></div>
+      <svg class="close" width="50" height="50" ng-click="closeCard()">
+        <line x1="10" y1="10" x2="40" y2="40" stroke="#000" stroke-width="2"/>
+        <line x1="40" y1="10" x2="10" y2="40" stroke="#000" stroke-width="2"/>
+      </svg>
       <div class="cardInfo">
-        <h2>{{curCard[0].name}}</h2>
-        <p><i>{{curCard[0].flavor}}</i></p>
-        <img src="{{curCard[0].img}}" />
-        <img src="{{curCard[0].imgGold}}" />
+        <div class="images">
+          <img src="{{curCard[0].img}}" />
+          <img src="{{curCard[0].imgGold}}" />
+        </div>
+          <h2>{{curCard[0].name}}</h2>
+          <p><i>{{curCard[0].flavor}}</i></p>
       </div>
     </div>
     <div class="options">
